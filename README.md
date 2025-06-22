@@ -7,4 +7,3 @@ Supports on-prem and cloud deployments, real-time overlays, and transcript/tag v
 
 We’ll build a scalable system to ingest user video, run AI models (object detection, speech-to-text, NLP), and present insights through a React dashboard.
 
-## 🗂️ Monorepo Structure
