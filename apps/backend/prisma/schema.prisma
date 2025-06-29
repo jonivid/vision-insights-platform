@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Video {
+  id         String       @id @default(uuid())
+  url        String
+  status     String       @default("pending")
+  createdAt  DateTime     @default(now())
+  transcripts Transcript[] // one-to-many
+  tags        Tag[]        // one-to-many
+  storageKey     String?   // e.g. path or S3 key
+  uploadProgress Int       @default(0) // percent 0–100
+}
+
+model Transcript {
+  id        Int      @id @default(autoincrement())
+  video     Video    @relation(fields: [videoId], references: [id])
+  videoId   String
+  text      String   @db.Text
+  words     Json     // array of { word, start, end }
+  createdAt DateTime @default(now())
+}
+
+model Tag {
+  id             String    @id @default(uuid())
+  video          Video     @relation(fields: [videoId], references: [id])
+  videoId        String
+  tagDisplayName String
+  tagType        String
+  objectType     String?   // null for audio tags
+  occurrences    Json      // store raw occurrence arrays as JSON
+}
