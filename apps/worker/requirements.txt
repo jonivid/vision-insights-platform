@@ -1,0 +1,7 @@
+redis
+rq
+python-dotenv
+requests
+openai-whisper
+whisperx
+boto3
